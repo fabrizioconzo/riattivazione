@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Richiesta riattivazione associato - CGN</title>
+
+  <style>
+    :root{
+      --brand-main: #2c6da2;
+      --text-main: #3b3b3b;
+      --bg: #ffffff;
+      --radius: 10px;
+      --max-width: 760px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:var(--bg);
+      color:var(--text-main);
+      padding:16px;
+      width:100%;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:center;
+    }
+
+    .wrap{
+      max-width:var(--max-width);
+      width:100%;
+      padding:24px;
+      background:#fff;
+      border-radius:var(--radius);
+      border:1px solid rgba(44,109,162,0.06);
+      box-shadow:0 8px 30px rgba(44,109,162,0.06);
+    }
+
+    .layout{
+      display:flex;
+      justify-content:center;
+      width:100%;
+    }
+
+    .form-area{
+      width:100%;
+      max-width:600px;
+    }
+
+    h1{
+      margin:0 0 10px 0;
+      font-size:22px;
+      color:var(--brand-main);
+    }
+
+    .lead{
+      margin:0 0 20px 0;
+      font-size:15px;
+    }
+
+    form{
+      display:grid;
+      gap:18px;
+      width:100%;
+    }
+
+    label{
+      display:block;
+      font-size:14px;
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    /* CAMPI UNO SOTTO L’ALTRO SEMPRE */
+    .row{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      width:100%;
+    }
+
+    .col{
+      width:100%;
+    }
+
+    input[type="text"]{
+      width:100%;
+      padding:12px 14px;
+      border-radius:8px;
+      border:1px solid #e6e6e6;
+      font-size:14px;
+      outline:none;
+    }
+
+    input[type="text"]:focus{
+      border-color:var(--brand-main);
+      box-shadow:0 8px 22px rgba(44,109,162,0.06);
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .btn-primary{
+      background:var(--brand-main);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:transparent;
+      color:var(--brand-main);
+      border:1px solid rgba(44,109,162,0.3);
+    }
+
+    .preview{
+      margin-top:10px;
+      padding:12px;
+      border-radius:8px;
+      background:#f7fbff;
+      border:1px solid rgba(44,109,162,0.06);
+      font-size:14px;
+      white-space:pre-line;
+      width:100%;
+    }
+
+    footer{
+      margin-top:24px;
+      padding:16px;
+      text-align:center;
+      font-size:13px;
+      color:#6b6b6b;
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    footer span{
+      color:var(--brand-main);
+      font-weight:600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="wrap">
+
+    <div class="layout">
+      <div class="form-area">
+
+        <h1>Richiesta riattivazione associato</h1>
+        <p class="lead">Inserisci i dati richiesti e premi "Invia richiesta".</p>
+
+        <form id="form" autocomplete="on" novalidate>
+
+          <div class="row">
+            <div class="col">
+              <label for="codice">Codice Ufficio</label>
+              <input id="codice" type="text" placeholder="Es. UFF-12345" required />
+            </div>
+
+            <div class="col">
+              <label for="nome">Nome e Cognome</label>
+              <input id="nome" type="text" placeholder="Es. Mario Rossi" required />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" id="send" class="btn btn-primary">Invia richiesta</button>
+            <button type="reset" class="btn btn-secondary">Cancella</button>
+          </div>
+          <div class="preview">
+<strong> Anteprima
+
+	Oggetto:</strong> <span id="subjectPreview">Richiesta riattivazione associato PM — - —</span>
+
+Buongiorno,
+Avrei la necessità di riattivare l’ufficio in oggetto.
+Attendo riscontro,
+Grazie,
+Buon lavoro.
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    © <span>Servizi CGN srl </span> — Società Benefit  
+  </footer>
+
+  <script>
+    const codiceEl = document.getElementById('codice');
+    const nomeEl = document.getElementById('nome');
+    const subjectPreview = document.getElementById('subjectPreview');
+
+    function updatePreview(){
+      const c = (codiceEl.value || '—').trim();
+      const n = (nomeEl.value || '—').trim();
+      subjectPreview.textContent = `Richiesta riattivazione associato PM ${c} - ${n}`;
+    }
+
+    codiceEl.addEventListener('input', updatePreview);
+    nomeEl.addEventListener('input', updatePreview);
+
+    document.getElementById('send').addEventListener('click', () => {
+      const codice = codiceEl.value.trim();
+      const nome = nomeEl.value.trim();
+
+      if(!codice){ alert("Inserisci il Codice Ufficio."); return; }
+      if(!nome){ alert("Inserisci Nome e Cognome."); return; }
+
+      const subject = `Richiesta riattivazione associato PM ${codice} - ${nome}`;
+      const body = encodeURIComponent(
+`Buongiorno,
+Avrei la necessità di riattivare l’ufficio in oggetto.
+Attendo riscontro,
+Grazie,
+Buon lavoro.`
+      );
+
+      const mailto = `mailto:rossella.rubert@cgn.it?cc=sonia.molinaro@cgn.it&subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = mailto;
+    });
+  </script>
+
+</body>
+</html>
